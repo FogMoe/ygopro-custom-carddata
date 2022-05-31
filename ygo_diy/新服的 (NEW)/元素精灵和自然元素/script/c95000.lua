@@ -17,7 +17,8 @@ function cm.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,95000)
+	e2:SetCountLimit(1,95001)
+	e2:SetCondition(aux.exccon)
 	e2:SetCost(cm.cost2)
 	e2:SetTarget(cm.tg2)
 	e2:SetOperation(cm.op2)
@@ -69,7 +70,7 @@ end
 function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,ft)  then		  
+		if Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,ft)  then		 
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 			local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,ft)
 			local sc=g:GetFirst()
