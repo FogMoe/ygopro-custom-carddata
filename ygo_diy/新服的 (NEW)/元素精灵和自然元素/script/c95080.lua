@@ -5,6 +5,13 @@ function cm.initial_effect(c)
 		--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,cm.ffilter,4,true)
+	--spsummon condition
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_SINGLE)
+	e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e9:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e9:SetValue(aux.fuslimit)
+	c:RegisterEffect(e9)
 	--attribute
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
