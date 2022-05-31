@@ -11,8 +11,15 @@ function cm.initial_effect(c)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE+TIMING_TOHAND)
 	e1:SetCondition(cm.condition)
 	e1:SetTarget(cm.target)
+	e1:SetCost(cm.descost)
 	e1:SetOperation(cm.activate)
 	c:RegisterEffect(e1)
+end
+function cm.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function cm.cfilter(c,att)
 	return c:IsFaceup() and c:IsAttribute(att)
@@ -21,14 +28,15 @@ function cm.dfilter2(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFacedown()
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,ATTRIBUTE_WIND)
-		and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,ATTRIBUTE_WATER)
-		and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,ATTRIBUTE_FIRE)
-		and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,ATTRIBUTE_EARTH)
+	return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WIND)
+		and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WATER)
+		and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_FIRE)
+		and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_EARTH)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		or Duel.IsExistingMatchingCard(cm.dfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		or Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsPlayerCanDraw(tp,2) end
 end
 function cm.filter1(c)
@@ -48,7 +56,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		opval[off-1]=2
 		off=off+1
 	end
-	if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,nil) then
+	if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 		ops[off]=aux.Stringid(m,2)
 		opval[off-1]=3
 		off=off+1
@@ -68,14 +76,14 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif opval[op]==3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,2,nil)
 		if g:GetCount()>0 then
 			Duel.HintSelection(g)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	elseif opval[op]==4 then
 		Duel.Draw(tp,2,REASON_EFFECT)
-		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+		local g=Duel.GetOperatedGroup()
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
