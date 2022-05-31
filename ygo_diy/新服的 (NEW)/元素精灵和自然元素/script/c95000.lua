@@ -7,7 +7,7 @@ function cm.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,95000+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,95000)
 	e1:SetTarget(cm.thtg)
 	e1:SetOperation(cm.thop)
 	c:RegisterEffect(e1)
@@ -69,7 +69,7 @@ end
 function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,ft)  then		   
+		if Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,ft)  then		  
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 			local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,ft)
 			local sc=g:GetFirst()
