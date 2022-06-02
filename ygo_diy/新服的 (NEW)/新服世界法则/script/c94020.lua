@@ -124,7 +124,7 @@ function c94020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lvt={}
 	local tc=g:GetFirst()
 	while tc do
-		local tlv=tc:GetLevel()
+		local tlv=tc:GetLevel()*2
 		lvt[tlv]=tlv
 		tc=g:GetNext()
 	end
