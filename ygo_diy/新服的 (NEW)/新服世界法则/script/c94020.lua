@@ -124,24 +124,26 @@ function c94020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lvt={}
 	local tc=g:GetFirst()
 	while tc do
-		local tlv=tc:GetLevel()*2
+		local tlv=tc:GetLevel()
 		lvt[tlv]=tlv
 		tc=g:GetNext()
 	end
 	local pc=1
 	for i=1,12 do
-		if lvt[i] then lvt[i]=nil lvt[pc]=i pc=pc+1 end
+		
+		   if lvt[i] then lvt[i]=nil lvt[pc]=i pc=pc+1 end
+		
 	end
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,1))
-	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))*2
+	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
 	Duel.RemoveCounter(tp,1,0,0xa95,lv,REASON_COST)
 	e:SetLabel(lv)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c94020.thfilter2(c,lv)
 	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE)
-		and c:IsLevel(lv/2) and c:IsAbleToHand() and c:IsSetCard(0x9401)
+		and c:IsLevel(lv) and c:IsAbleToHand() and c:IsSetCard(0x9401)
 end
 function c94020.thop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
