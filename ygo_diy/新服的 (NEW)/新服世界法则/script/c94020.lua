@@ -115,7 +115,7 @@ function c94020.counter(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c94020.thfilter1(c,tp)
-	local lv=c:GetLevel()
+	local lv=c:GetLevel()*2
 	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE) and lv>0 and c:IsAbleToHand()and Duel.IsCanRemoveCounter(tp,1,0,0xa95,lv,REASON_COST) and c:IsSetCard(0x9401) and c:IsType(TYPE_MONSTER)
 end
 function c94020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -137,7 +137,9 @@ function c94020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,1))
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
-	Duel.RemoveCounter(tp,1,0,0xa95,lv*2,REASON_COST)
+	if Duel.GetCounter(tp,1,0,0xa95)>=lv*2 then
+		Duel.RemoveCounter(tp,1,0,0xa95,lv*2,REASON_COST)
+	end
 	e:SetLabel(lv)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
