@@ -73,7 +73,7 @@ function c94020.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsCanAddCounter(tp,0xa95,1,c) end
 end
 function c94020.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_HAND) and c:GetPreviousControler()==tp
+	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_HAND) and c:GetPreviousControler()==tp and c:IsSetCard(0x9401)
 end
 function c94020.cfilterdraw(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_HAND) and c:GetPreviousControler()==tp and c:IsSetCard(0x9401)
@@ -117,14 +117,14 @@ function c94020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,1))
-	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
+	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))*2
 	Duel.RemoveCounter(tp,1,0,0xa95,lv,REASON_COST)
 	e:SetLabel(lv)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c94020.thfilter2(c,lv)
 	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE)
-		and c:IsLevel(lv) and c:IsAbleToHand() and c:IsType(TYPE_NORMAL)
+		and c:IsLevel(lv/2) and c:IsAbleToHand() and c:IsSetCard(0x9401)
 end
 function c94020.thop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
