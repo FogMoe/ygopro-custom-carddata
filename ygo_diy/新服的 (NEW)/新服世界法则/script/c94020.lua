@@ -58,8 +58,25 @@ function cm.initial_effect(c)
 	e7:SetCondition(c94020.indcon)
 	e7:SetValue(1)
 	c:RegisterEffect(e7)
+	--maintain
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e9:SetCode(EVENT_PHASE+PHASE_END)
+	e9:SetRange(LOCATION_SZONE)
+	e9:SetCountLimit(1)
+	e9:SetOperation(cm.mtop)
+	c:RegisterEffect(e9)
 
 end
+function cm.mtop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.CheckLPCost(tp,300) then
+		Duel.PayLPCost(tp,300)
+	else
+		Duel.Remove(e:GetHandler(),REASON_COST)
+	end
+end
+
 function cm.e2activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:AddCounter(0xa95,1)
@@ -99,7 +116,7 @@ function c94020.counter(e,tp,eg,ep,ev,re,r,rp)
 end
 function c94020.thfilter1(c,tp)
 	local lv=c:GetLevel()
-	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE) and lv>0 and c:IsAbleToHand()and Duel.IsCanRemoveCounter(tp,1,0,0xa95,lv,REASON_COST) and c:IsType(TYPE_NORMAL)
+	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE) and lv>0 and c:IsAbleToHand()and Duel.IsCanRemoveCounter(tp,1,0,0xa95,lv,REASON_COST) and c:IsSetCard(0x9401) and c:IsType(TYPE_MONSTER)
 end
 function c94020.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c94020.thfilter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
