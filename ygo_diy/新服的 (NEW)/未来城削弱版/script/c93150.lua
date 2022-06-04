@@ -60,7 +60,10 @@ function c93150.desop(e,tp,eg,ep,ev,re,r,rp)
 	-- if not e:GetHandler():IsRelateToEffect(e) then return end
 	
 	local tc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	tcg1=tc:GetFirst()
+	tcg2=tc:GetNext()
+	if tcg1:IsRelateToEffect(e) and Duel.Destroy(tcg1,REASON_EFFECT)~=0 and
+	tcg2:IsRelateToEffect(e) and Duel.Destroy(tcg2,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c93150.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if g:GetCount()>0 then
@@ -90,8 +93,11 @@ end
 function c93150.spop(e,tp,eg,ep,ev,re,r,rp)
   --  if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if tc:IsRelateToEffect(e) then
-		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0
+	tcgg1=tc:GetFirst()
+	tcgg2=tc:GetNext()
+	if tcgg1:IsRelateToEffect(e) and tcgg2:IsRelateToEffect(e) then
+		if Duel.SpecialSummon(tcgg1,0,tp,tp,false,false,POS_FACEUP)~=0
+		and Duel.SpecialSummon(tcgg2,0,tp,tp,false,false,POS_FACEUP)~=0
 		then Duel.BreakEffect()
 		if Duel.SelectYesNo(tp,aux.Stringid(93150,0)) then
 			
