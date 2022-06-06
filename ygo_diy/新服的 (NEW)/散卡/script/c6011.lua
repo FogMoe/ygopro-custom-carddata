@@ -59,8 +59,9 @@ function cm.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	local atk=Duel.GetAttacker():GetAttack()
-	Duel.SetTargetParam(atk)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,atk)
+	local heallp=atk*2
+	Duel.SetTargetParam(heallp)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,heallp)
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
