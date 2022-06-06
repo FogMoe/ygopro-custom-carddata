@@ -14,7 +14,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Activate(effect)
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DRAW)
+	e4:SetCategory(CATEGORY_NEGATE)
 	e4:SetType(EFFECT_TYPE_ACTIVATE)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(cm.condition2)
@@ -53,11 +53,9 @@ function cm.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_RITUAL)
 end
 function cm.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function cm.activate2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
-	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
