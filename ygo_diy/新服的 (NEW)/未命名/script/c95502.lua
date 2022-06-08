@@ -23,7 +23,7 @@ function cm.initial_effect(c)
 	--control
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(m,3))
-	e4:SetCategory(CTEGORY_CONTROL+CATEGORY_DESTROY)
+	e4:SetCategory(CATEGORY_CONTROL+CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
