@@ -45,6 +45,17 @@ function cm.initial_effect(c)
 	e4:SetHintTiming(TIMING_END_PHASE)
 	e4:SetOperation(cm.disop)
 	c:RegisterEffect(e4)
+	--cannot attack
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCode(EFFECT_CANNOT_ATTACK)
+	e5:SetTargetRange(0,LOCATION_MZONE)
+	e5:SetTarget(cm.antarget)
+	c:RegisterEffect(e5)
+end
+function cm.antarget(e,c)
+	return c:IsSetCard(0x9901)
 end
 function cm.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END
