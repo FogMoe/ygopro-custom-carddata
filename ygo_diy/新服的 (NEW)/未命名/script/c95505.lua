@@ -38,7 +38,6 @@ function cm.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		ge1:SetCode(EVENT_TO_GRAVE)
-		ge1:SetCondition(cm.gravecon)
 		ge1:SetOperation(cm.checkop)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=Effect.CreateEffect(c)
@@ -53,7 +52,7 @@ function cm.checkop(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		if (tc:IsPreviousLocation(LOCATION_MZONE) or tc:IsPreviousLocation(LOCATION_HAND)) and tc:IsSetCard(0x9901) and tc:IsType(TYPE_MONSTER) then
 				cm.counter=cm.counter+1
-					Duel.RegisterFlagEffect(0,m,RESET_PHASE+PHASE_END,0,1)
+					Duel.RegisterFlagEffect(0,m-100,RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=eg:GetNext()
 	end
