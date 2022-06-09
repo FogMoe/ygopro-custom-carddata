@@ -8,11 +8,43 @@ function cm.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,m)
 	e1:SetTarget(cm.thtg)
 	e1:SetCondition(cm.condition)
 	e1:SetOperation(cm.thop)
 	c:RegisterEffect(e1)
+	--rm
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(m,0))
+	e4:SetCategory(CATEGORY_REMOVE)
+	e4:SetType(EFFECT_TYPE_QUICK_F)
+	e4:SetRange(LOCATION_GRAVE)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetCost(aux.bfgcost)
+	e4:SetTarget(cm.distg)
+	e4:SetCondition(cm.setcon)
+	e4:SetHintTiming(TIMING_END_PHASE)
+	e4:SetOperation(cm.disop)
+	c:RegisterEffect(e4)
 end
+function cm.setcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_END
+end
+function cm.disfilter(c)
+	return c:IsSetCard(0x9901) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
+end
+function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.disfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
+end
+function cm.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,cm.disfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT) end
+end
+
+
 function cm.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x9901) and c:IsType(TYPE_MONSTER)
 end
