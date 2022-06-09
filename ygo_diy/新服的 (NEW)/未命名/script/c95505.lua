@@ -30,38 +30,44 @@ function cm.initial_effect(c)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,m-100)
 	e4:SetCondition(cm.ctcon)
-	e4:SetOperation(cm.ctop)
+	e4:SetOperation(cm.drop)
+	e4:SetTarget(cm.drtg)
 	c:RegisterEffect(e4)
 	if cm.counter==nil then
-		cm.counter=true
-		cm[0]=0
-		cm[1]=0
-		local e6=Effect.CreateEffect(c)
-		e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e6:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		e6:SetOperation(cm.resetcount)
-		Duel.RegisterEffect(e6,0)
-		local e7=Effect.CreateEffect(c)
-		e7:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e7:SetCode(EVENT_TO_GRAVE)
-		e7:SetCondition(cm.gravecon)
-		e7:SetOperation(cm.addcount)
-		Duel.RegisterEffect(e7,0)
+		cm.counter=0
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		ge1:SetCode(EVENT_TO_GRAVE)
+		ge1:SetCondition(cm.gravecon)
+		ge1:SetOperation(cm.checkop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge2:SetOperation(cm.clearop)
+		Duel.RegisterEffect(ge2,0)
 	end
 end
-function cm.resetcount(e,tp,eg,ep,ev,re,r,rp)
-	cm[0]=0
-	cm[1]=0
-end
-function cm.addcount(e,tp,eg,ep,ev,re,r,rp)
+function cm.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if (tc:IsPreviousLocation(LOCATION_MZONE) or tc:IsPreviousLocation(LOCATION_HAND)) and tc:IsPreviousSetCard(0x9901) and tc:IsType(TYPE_MONSTER) then
-			local p=tc:GetReasonPlayer()
-			cm[p]=cm[p]+1
+		if (tc:IsPreviousLocation(LOCATION_MZONE) or tc:IsPreviousLocation(LOCATION_HAND)) and tc:IsSetCard(0x9901) and tc:IsType(TYPE_MONSTER) then
+				cm.counter=cm.counter+1
+					Duel.RegisterFlagEffect(0,m,RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=eg:GetNext()
 	end
+end
+function cm.clearop(e,tp,eg,ep,ev,re,r,rp)
+	cm.counter=0
+end
+function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,cm.counter) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,cm.counter)
+end
+function cm.drop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Draw(tp,cm.counter,REASON_EFFECT)
 end
 
 
@@ -70,7 +76,7 @@ function cm.cfilter(c)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp) and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp) and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,2,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -97,16 +103,3 @@ function cm.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(m)>0
 end
 
-function cm.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetCountLimit(1)
-	e1:SetOperation(cm.droperation)
-	Duel.RegisterEffect(e1,tp)
-end
-function cm.droperation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,m)
-	Duel.Draw(tp,cm[tp],REASON_EFFECT)
-end

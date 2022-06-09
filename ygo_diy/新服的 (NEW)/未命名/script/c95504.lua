@@ -39,7 +39,7 @@ function cm.cfilter(c)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp) and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp) and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,2,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -80,10 +80,11 @@ end
 function cm.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),2)
 	local tg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if ft<=0 or #tg==0 then return end	
+	if ft<=0 or #tg==0 then return end  
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	aux.GCheckAdditional=cm.spcheck
 	local g=tg:SelectSubGroup(tp,aux.TRUE,false,1,ft)
 	aux.GCheckAdditional=nil
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+	Duel.ConfirmCards(1-tp,g)
 end
