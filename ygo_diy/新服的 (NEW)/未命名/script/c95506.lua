@@ -23,12 +23,22 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Activate
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(TIMING_END_PHASE)
 	e2:SetCondition(cm.condition)
 	e2:SetOperation(cm.activate)
+	e2:SetCost(cm.cost)
 	c:RegisterEffect(e2)
+end
+function cm.rmfilter(c,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9901)
+end
+function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckRemoveOverlayCard(tp,LOCATION_DECK,0,1,REASON_COST) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,cm.rmfilter,tp,LOCATION_DECK,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END
