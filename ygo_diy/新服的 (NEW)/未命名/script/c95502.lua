@@ -80,7 +80,7 @@ end
 function cm.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local g1=Duel.GetMatchingGroup(cm.e3filter,tp,0,LOCATION_MZONE,nil)
 		local g2=Duel.GetMatchingGroup(cm.desfilter,tp,0,LOCATION_ONFIELD,nil)
-		if tg:GetCount()>0 and (g1:GetCount()>0 or g2:GetCount()>0) then
+		if g1:GetCount()>0 or g2:GetCount()>0 then
 			local op=0
 			if g1:GetCount()>0 and g2:GetCount()>0 then
 				op=Duel.SelectOption(tp,aux.Stringid(m,1),aux.Stringid(m,2))
