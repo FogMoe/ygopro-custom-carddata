@@ -17,19 +17,15 @@ function cm.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(m,0))
 	e4:SetCategory(CATEGORY_REMOVE)
-	e4:SetType(EFFECT_TYPE_QUICK_F)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetCost(aux.bfgcost)
 	e4:SetTarget(cm.distg)
-	e4:SetCondition(cm.setcon)
-	e4:SetHintTiming(TIMING_END_PHASE)
 	e4:SetOperation(cm.disop)
 	c:RegisterEffect(e4)
 end
-function cm.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END
-end
+
 function cm.disfilter(c)
 	return c:IsSetCard(0x9901) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
 end
