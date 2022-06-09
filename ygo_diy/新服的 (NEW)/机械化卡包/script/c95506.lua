@@ -35,8 +35,6 @@ function cm.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS)
 	e4:SetRange(LOCATION_FZONE)
-	e4:SetTargetRange(0,LOCATION_MZONE)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetOperation(cm.operation)
 	c:RegisterEffect(e4)
 end
