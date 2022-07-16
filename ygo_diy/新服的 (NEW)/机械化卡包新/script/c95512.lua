@@ -120,31 +120,31 @@ function cm.activate3(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(900)
 			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e2:SetCode(EVENT_PHASE+PHASE_END)
-			e2:SetCountLimit(1)
-			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e2:SetLabelObject(tc)
-			e2:SetCondition(cm.descon)
-			e2:SetOperation(cm.desop)
-			Duel.RegisterEffect(e2,tp)
 		end
 		tc=g:GetNext()
 	end
+	g:KeepAlive()
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetCountLimit(1)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetLabelObject(g)
+	e2:SetCondition(cm.descon)
+	e2:SetOperation(cm.desop)
+	Duel.RegisterEffect(e2,tp)	
+end
+function cm.desfilter(c)
+	return c:GetFlagEffect(m)~=0
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(m)~=0 then
-		return true
-	else
-		e:Reset()
-		return false
-	end
+	return e:GetLabelObject():IsExists(cm.desfilter,1,nil)
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoGrave(tc,REASON_EFFECT)
+	local g=e:GetLabelObject()
+	local tg=g:Filter(cm.desfilter,nil)
+	Duel.SendtoGrave(tg,REASON_EFFECT)
+	g:DeleteGroup()
 end
 
 function cm.setcon(e,tp,eg,ep,ev,re,r,rp)
