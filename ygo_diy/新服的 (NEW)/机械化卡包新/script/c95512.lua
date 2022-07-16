@@ -121,6 +121,7 @@ function cm.activate3(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(900)
 			tc:RegisterEffect(e1)
 		end
+		tc:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		tc=g:GetNext()
 	end
 	g:KeepAlive()
@@ -132,7 +133,7 @@ function cm.activate3(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabelObject(g)
 	e2:SetCondition(cm.descon)
 	e2:SetOperation(cm.desop)
-	Duel.RegisterEffect(e2,tp)	
+	Duel.RegisterEffect(e2,tp)  
 end
 function cm.desfilter(c)
 	return c:GetFlagEffect(m)~=0
