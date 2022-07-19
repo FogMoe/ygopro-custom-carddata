@@ -64,7 +64,7 @@ end
 
 
 function cm.desfilter(c)
-	return c:IsDefenseBelow(2000)
+	return c:IsDefenseBelow(2000) and c:IsFaceup()
 end
 function cm.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
