@@ -16,6 +16,7 @@ function c6019.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetTarget(cm.chtg)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1,m)
 	e2:SetOperation(cm.chop)
 	c:RegisterEffect(e2)
 	--cannot attack
@@ -27,28 +28,37 @@ function c6019.initial_effect(c)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	c:RegisterEffect(e3)
 end
+function cm.pfilter(c)
+	return c:IsCanChangePosition() and c:IsFaceup()
+end
 function cm.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanChangePosition,tp,LOCATION_MZONE,0,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.pfilter,tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(cm.pfilter,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 end
 function cm.chop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(cm.pfilter,tp,LOCATION_MZONE,0,nil)
 	if g:GetCount()>0 then				
 		local fid=c:GetFieldID()
 		local tc=g:GetFirst()
-		while tc do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-			e1:SetValue(tc:GetDefense()*2)
-			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
-			tc=g:GetNext()
+		if Duel.ChangePosition(g,POS_FACEUP_DEFENSE) then
+			while tc do
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+				e1:SetValue(tc:GetDefense()*2)
+				tc:RegisterEffect(e1)
+				tc:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e2)
+				tc=g:GetNext()
+			end	 
 		end
-		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 	end
 end
 
