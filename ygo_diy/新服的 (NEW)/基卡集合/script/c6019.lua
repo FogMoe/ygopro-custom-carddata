@@ -29,7 +29,7 @@ function c6019.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.pfilter(c)
-	return c:IsCanChangePosition() and c:IsFaceup()
+	return c:IsCanChangePosition()
 end
 function cm.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.pfilter,tp,LOCATION_MZONE,0,1,nil) end
