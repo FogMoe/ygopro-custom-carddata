@@ -60,6 +60,7 @@ end
 
 function cm.sfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE) and c:IsPreviousLocation(LOCATION_MZONE)
+end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cm.sfilter,1,nil)
 end
