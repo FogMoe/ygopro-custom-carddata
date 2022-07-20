@@ -12,6 +12,17 @@ function c95700.initial_effect(c)
 	e3:SetTarget(cm.indtg)
 	e3:SetValue(cm.valcon)
 	c:RegisterEffect(e3)
+	--defence atk
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE)
+	e8:SetCode(EFFECT_DEFENSE_ATTACK)
+	e8:SetValue(1)
+	c:RegisterEffect(e8)
+	--cannot direct attack
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	c:RegisterEffect(e1)
 end
 function cm.valcon(e,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0
