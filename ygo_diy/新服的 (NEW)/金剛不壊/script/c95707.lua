@@ -16,6 +16,7 @@ function c95707.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 	e3:SetValue(aux.imval1)
+	e3:SetCondition(cm.indcon)
 	c:RegisterEffect(e3)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
@@ -26,6 +27,9 @@ function c95707.initial_effect(c)
 	e2:SetValue(cm.repval)
 	e2:SetOperation(cm.repop)
 	c:RegisterEffect(e2)
+end
+function cm.indcon(e)
+	return e:GetHandler():GetEquipTarget():GetDefense()<2500
 end
 function cm.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0x9905)

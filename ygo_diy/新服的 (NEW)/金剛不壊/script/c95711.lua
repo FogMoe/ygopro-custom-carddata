@@ -44,8 +44,8 @@ function c95711.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
-	local loc,pos=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_POSITION)
-	return re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and bit.band(pos,POS_ATTACK)~=0
+	local loc,pos=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_ATTACK)
+	return re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and pos>2000
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

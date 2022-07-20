@@ -25,7 +25,7 @@ function c95708.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function cm.atkval(e,c)
-	return Duel.GetMatchingGroupCount(cm.filter,tp,LOCATION_ONFIELD,0,nil)*400
+	return Duel.GetMatchingGroupCount(cm.filter,c:GetControler(),LOCATION_ONFIELD,0,nil)*400
 end
 
 function cm.eqlimit(e,c)

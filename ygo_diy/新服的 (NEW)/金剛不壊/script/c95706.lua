@@ -27,7 +27,11 @@ function c95706.initial_effect(c)
 	e4:SetTargetRange(0,LOCATION_MZONE)
 	e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e4:SetValue(cm.atlimit)
+	e4:SetCondition(cm.indcon)
 	c:RegisterEffect(e4)
+end
+function cm.indcon(e)
+	return e:GetHandler():IsDefensePos()
 end
 function cm.atlimit(e,c)
 	return c~=e:GetHandler() and c:IsSetCard(0x9905)

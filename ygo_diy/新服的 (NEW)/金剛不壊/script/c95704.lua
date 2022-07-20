@@ -21,6 +21,30 @@ function c95704.initial_effect(c)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetCondition(cm.ntcon)
 	c:RegisterEffect(e2)
+	--damage
+	local e7=Effect.CreateEffect(c)
+	e7:SetDescription(aux.Stringid(m,1))
+	e7:SetCategory(CATEGORY_DAMAGE)
+	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e7:SetCode(EVENT_BATTLE_DAMAGE)
+	e7:SetCondition(cm.damcon)
+	e7:SetTarget(cm.damtg)
+	e7:SetOperation(cm.damop)
+	c:RegisterEffect(e7)
+end
+function cm.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp and e:GetHandler():IsDefensePos()
+		and Duel.GetAttacker()==e:GetHandler()
+end
+function cm.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local ct=e:GetHandler():GetAttack()
+	Duel.SetTargetParam(ct)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct)
+end
+function cm.damop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetHandler():GetAttack()
+	Duel.Damage(1-tp,ct,REASON_EFFECT)
 end
 function cm.ntcon(e,c,minc)
 	if c==nil then return true end
