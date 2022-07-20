@@ -2,6 +2,7 @@
 local m=95709
 local cm=_G["c"..m]
 function c95709.initial_effect(c)
+	c:SetUniqueOnField(1,0,m)
 				--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
