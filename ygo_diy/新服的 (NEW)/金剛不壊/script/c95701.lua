@@ -29,5 +29,5 @@ function cm.cfilter(c)
 	return c:IsFaceup() and c:IsPosition(POS_ATTACK)
 end
 function cm.atkval(e,c)
-	return Duel.GetMatchingGroupCount(cm.cfilter,c:GetControler(),0,LOCATION_MZONE,nil)*100
+	return Duel.GetMatchingGroupCount(cm.cfilter,c:GetControler(),0,LOCATION_MZONE,nil)*400
 end
