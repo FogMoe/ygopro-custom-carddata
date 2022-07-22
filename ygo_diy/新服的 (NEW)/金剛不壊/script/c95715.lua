@@ -54,6 +54,6 @@ function cm.costchk(e,te_or_c,tp)
 	return Duel.CheckLPCost(tp,numbs)
 end
 function cm.costop(e,tp,eg,ep,ev,re,r,rp)
-	local numbs=Duel.GetMatchingGroup(cm.cfilter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)*50
+	local numbs=Duel.GetMatchingGroupCount(cm.cfilter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)*50
 	Duel.PayLPCost(tp,numbs)
 end
