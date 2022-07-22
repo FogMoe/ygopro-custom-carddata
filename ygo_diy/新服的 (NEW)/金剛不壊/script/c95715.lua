@@ -50,10 +50,10 @@ function cm.cfilter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x9905)
 end
 function cm.costchk(e,te_or_c,tp)
-	local numbs=Duel.GetMatchingGroupCount(cm.cfilter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)
-	return Duel.CheckLPCost(tp,50*numbs)
+	local numbs=Duel.GetMatchingGroupCount(cm.cfilter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)*50
+	return Duel.CheckLPCost(tp,numbs)
 end
 function cm.costop(e,tp,eg,ep,ev,re,r,rp)
-	local numbs=Duel.GetMatchingGroup(cm.cfilter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)
-	Duel.PayLPCost(tp,50*numbs)
+	local numbs=Duel.GetMatchingGroup(cm.cfilter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)*50
+	Duel.PayLPCost(tp,numbs)
 end
