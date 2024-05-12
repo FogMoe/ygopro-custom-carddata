@@ -1,4 +1,4 @@
-local m=6001
+local m=10000110
 local cm=_G["c"..m]
 cm.name="特雷维喷泉"
 function cm.initial_effect(c)

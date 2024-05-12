@@ -1,4 +1,4 @@
-local m=6008
+local m=10000117
 local cm=_G["c"..m]
 cm.name="里世界"
 function cm.initial_effect(c)

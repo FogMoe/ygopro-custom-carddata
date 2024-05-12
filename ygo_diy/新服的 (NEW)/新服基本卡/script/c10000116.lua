@@ -1,4 +1,4 @@
-local m=6007
+local m=10000116
 local cm=_G["c"..m]
 cm.name="眩惑"
 function cm.initial_effect(c)

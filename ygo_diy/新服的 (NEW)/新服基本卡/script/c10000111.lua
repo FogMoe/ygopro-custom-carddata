@@ -1,4 +1,4 @@
-local m=6002
+local m=10000111
 local cm=_G["c"..m]
 cm.name="力量衰减"
 function cm.initial_effect(c)

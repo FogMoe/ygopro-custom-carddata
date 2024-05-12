@@ -1,4 +1,4 @@
-local m=6010
+local m=10000109
 local cm=_G["c"..m]
 cm.name="缓和魔力"
 function cm.initial_effect(c)

@@ -1,4 +1,4 @@
-local m=6004
+local m=10000113
 local cm=_G["c"..m]
 cm.name="过重的赠礼"
 function cm.initial_effect(c)

@@ -1,4 +1,4 @@
-local m=6009
+local m=10000118
 local cm=_G["c"..m]
 cm.name="对峙灵摆"
 function cm.initial_effect(c)

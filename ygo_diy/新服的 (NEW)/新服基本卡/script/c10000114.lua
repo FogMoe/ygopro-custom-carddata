@@ -1,4 +1,4 @@
-local m=6005
+local m=10000114
 local cm=_G["c"..m]
 cm.name="高等领域"
 function cm.initial_effect(c)
