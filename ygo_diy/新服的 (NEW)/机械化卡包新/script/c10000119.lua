@@ -1,4 +1,4 @@
-local m=6013
+local m=10000119
 local cm=_G["c"..m]
 cm.name="埋葬场"
 function cm.initial_effect(c)
