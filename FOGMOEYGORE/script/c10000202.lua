@@ -1,5 +1,5 @@
 -- 龙族·风属性通常怪兽1只
--- ①：1回合1次，支付1000基本分，把自己场上1只怪兽解放才能发动。从卡组把1只龙族·风属性通常怪兽特殊召唤。
+-- ①：1回合1次，支付1000基本分，把自己场上1只怪兽解放才能发动。从卡组把1只龙族·风属性通常怪兽攻击力下降500攻击表示特殊召唤。
 -- ②：这张卡被解放的场合发动。这个回合自己不能攻击宣言。
 local s,id,o=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1)
+	e5:SetCountLimit(1,id)
 	e5:SetCost(s.spcost)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
@@ -60,7 +60,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local tc=g:GetFirst()
+	if not tc then return end
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		-- Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(-500)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
+		Duel.SpecialSummonComplete()
 	end
 end
