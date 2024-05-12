@@ -1,7 +1,7 @@
 --金城铁壁
-local m=6019
+local m=10000101
 local cm=_G["c"..m]
-function c6019.initial_effect(c)
+function c10000101.initial_effect(c)
 		--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)

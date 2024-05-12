@@ -1,7 +1,7 @@
 --攻城锤
-local m=6020
+local m=10000100
 local cm=_G["c"..m]
-function c6020.initial_effect(c)
+function c10000100.initial_effect(c)
 		--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)

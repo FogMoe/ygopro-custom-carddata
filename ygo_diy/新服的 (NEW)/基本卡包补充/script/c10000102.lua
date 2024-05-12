@@ -1,7 +1,7 @@
 --机械拆解
-local m=6016
+local m=10000102
 local cm=_G["c"..m]
-function c6016.initial_effect(c)
+function c10000102.initial_effect(c)
 		--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SEARCH)

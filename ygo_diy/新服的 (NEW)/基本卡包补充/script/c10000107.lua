@@ -1,4 +1,4 @@
-local m=6011
+local m=10000107
 local cm=_G["c"..m]
 cm.name="回复手坑"
 function cm.initial_effect(c)

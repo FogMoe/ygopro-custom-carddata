@@ -1,5 +1,5 @@
 --埋骨地
-function c6015.initial_effect(c)
+function c10000106.initial_effect(c)
 		--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,22 +13,22 @@ function c6015.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCountLimit(1)
-	e3:SetTarget(c6015.atktg2)
-	e3:SetOperation(c6015.atkop2)
+	e3:SetTarget(c10000106.atktg2)
+	e3:SetOperation(c10000106.atkop2)
 	c:RegisterEffect(e3)
 end
-function c6015.filter2(c,e,tp)
+function c10000106.filter2(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsReason(REASON_DESTROY)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
 end
-function c6015.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and c6015.filter2(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(c6015.filter2,1,nil,e,tp) end
+function c10000106.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return eg:IsContains(chkc) and c10000106.filter2(chkc,e,tp) end
+	if chk==0 then return eg:IsExists(c10000106.filter2,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,c6015.filter2,1,1,nil,e,tp)
+	local g=eg:FilterSelect(tp,c10000106.filter2,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
 end
-function c6015.atkop2(e,tp,eg,ep,ev,re,r,rp)
+function c10000106.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget() 
 	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then

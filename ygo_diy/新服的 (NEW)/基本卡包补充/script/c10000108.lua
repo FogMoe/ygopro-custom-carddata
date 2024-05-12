@@ -1,4 +1,4 @@
-local m=6012
+local m=10000108
 local cm=_G["c"..m]
 cm.name="仪式的突然终止"
 function cm.initial_effect(c)

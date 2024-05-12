@@ -1,7 +1,7 @@
 --机械世界
-local m=6017
+local m=10000104
 local cm=_G["c"..m]
-function c6017.initial_effect(c)
+function c10000104.initial_effect(c)
 		--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
