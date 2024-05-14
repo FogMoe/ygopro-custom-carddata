@@ -1,6 +1,5 @@
-local m=10000051
-local cm=_G["c"..m]
-function c10000051.initial_effect(c)
+local s,id,o=GetID()
+function s.initial_effect(c)
 		--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,27 +12,27 @@ function c10000051.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,m)
-	e2:SetTarget(cm.thtg)
-	e2:SetCondition(cm.condition)
-	e2:SetOperation(cm.thop)
+	e2:SetTarget(s.thtg)
+	e2:SetCondition(s.condition)
+	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-function cm.ssfilter(c)
+function s.ssfilter(c)
 	return c:IsType(TYPE_MONSTER)
 end
-function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(cm.ssfilter,tp,LOCATION_MZONE,0,nil)==0
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroupCount(s.ssfilter,tp,LOCATION_MZONE,0,nil)==0
 end
-function cm.filter(c)
+function s.filter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(4)
 end
-function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil) end
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function cm.thop(e,tp,eg,ep,ev,re,r,rp)
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

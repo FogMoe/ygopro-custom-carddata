@@ -3,7 +3,7 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,s.ffilter,2,true)
-    aux.AddContactFusionProcedure(c,aux.FilterBoolFunction(Card.IsAbleToRemove,REASON_SPSUMMON),LOCATION_MZONE+LOCATION_HAND,0,Duel.Remove,REASON_SPSUMMON+REASON_MATERIAL)
+    aux.AddContactFusionProcedure(c,aux.FilterBoolFunction(Card.IsAbleToRemove,REASON_SPSUMMON),LOCATION_MZONE+LOCATION_HAND,0,Duel.Remove,POS_FACEUP,REASON_SPSUMMON+REASON_MATERIAL)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
