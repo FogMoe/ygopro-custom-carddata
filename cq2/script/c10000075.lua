@@ -74,7 +74,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	c:SetTurnCounter(ct)
 	if ct==2 then
 		Duel.Destroy(c,REASON_RULE)
-		c:ResetFlagEffect(id+10000)
+		c:ResetFlagEffect(id)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -93,7 +93,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetOperation(s.desop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,2)
 	e:GetHandler():RegisterEffect(e1)
-	e:GetHandler():RegisterFlagEffect(id+10000,RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,2)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,2)
 	s[e:GetHandler()]=e1
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
