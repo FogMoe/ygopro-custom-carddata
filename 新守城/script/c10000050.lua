@@ -34,7 +34,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.cfilter,c:GetControler(),0,LOCATION_MZONE,nil)*400
 end
 function s.poscon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetAttackedCount()>0
+	return e:GetHandler():IsAttackPos()
 end
 function s.posop1(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsAttackPos() then
