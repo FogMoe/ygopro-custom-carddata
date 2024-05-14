@@ -140,7 +140,7 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
 	local rec=Duel.GetMatchingGroupCount(s.cfilter2,tp,LOCATION_MZONE,0,nil)*200
-	if rec<0 then rec=0 return end
+	if rec<0 then rec=0 return false end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(rec)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
