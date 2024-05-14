@@ -34,7 +34,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.extraop(e,tp,eg,ep,ev,re,r,rp,tc,mat)
-	if not tc then return end
 	local ct=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_EQUIP):GetClassCount(Card.GetCode)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	if ct>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
