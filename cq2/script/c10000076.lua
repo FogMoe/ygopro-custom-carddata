@@ -55,7 +55,7 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_DAMAGE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetCode(EVENT_DAMAGE)
+	e5:SetCode(EVENT_BATTLE_DAMAGE)
 	e5:SetCountLimit(1)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -65,7 +65,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_BATTLE)~=0 and ep==tp
+	return ep==tp
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
