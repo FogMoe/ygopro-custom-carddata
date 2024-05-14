@@ -41,8 +41,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,GetLP(tp/2)) end
-	Duel.PayLPCost(tp,GetLP(tp/2))
+	if chk==0 then return Duel.CheckLPCost(tp,Duel.GetLP(tp/2)) end
+	Duel.PayLPCost(tp,Duel.GetLP(tp/2))
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsAttribute(ATTRIBUTE_DARK)
